@@ -25,7 +25,8 @@ async def upload_local_video(video_file: UploadFile = File(...)):
     return IngestResponseDTO(job_id=job.id, status=job.status, cached=False)
 
 
-@router.api_route("/videos/{video_id}/media", methods=["GET", "HEAD"])
+@router.get("/videos/{video_id}/media")
+@router.head("/videos/{video_id}/media", include_in_schema=False)
 def get_local_video(video_id: int, session: Session = Depends(get_session)):
     media = session.get(LocalVideoMedia, video_id)
     if not media:

@@ -190,8 +190,6 @@ class ShadowingEvaluateResponseDTO(BaseModel):
 class ShadowingAttemptDTO(BaseModel):
     evaluation_version: str = "1"
     prosody: Optional[dict] = None
-    evaluation_version: str = "1"
-    prosody: Optional[dict] = None
     id: int
     segment_id: int
     job_id: str

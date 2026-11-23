@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     MODEL_CACHE_DIR: str = "./data/models"
 
     # Contextual LLM Tutor & Vocabulary (Section 11, Section 6)
-    TUTOR_ENABLED: bool = True
+    TUTOR_ENABLED: bool = False
     TUTOR_PROVIDER: str = "gemini"
     TUTOR_MODEL: str = "gemini-3.5-flash-lite"
     OLLAMA_BASE_URL: str = "http://127.0.0.1:11434"

@@ -195,6 +195,7 @@ def test_in_flight_cuda_oom_recovery_in_auto_mode(tmp_path):
         return cpu_model_mock
 
     with pytest.MonkeyPatch.context() as mp:
+        mp.setattr("ctranslate2.get_cuda_device_count", lambda: 1)
         mp.setattr("faster_whisper.WhisperModel", factory)
         mp.setattr(settings, "SPEECH_DEVICE", "auto")
         mp.setattr(settings, "SPEECH_ALLOW_CPU_FALLBACK", True)
