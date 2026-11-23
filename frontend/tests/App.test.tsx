@@ -12,6 +12,15 @@ describe('App Component & Routing', () => {
     localStorage.clear();
     queryClient.clear();
     vi.spyOn(apiClient, 'getLocalImports').mockResolvedValue([]);
+    vi.spyOn(apiClient, 'createSession').mockImplementation(async (id) => ({
+      id: `sess-${id}`,
+      segment_id: id,
+      hinted_display_indices: [],
+      answer_revealed: false,
+      last_input: '',
+      last_result: null,
+      created_at: new Date().toISOString(),
+    }));
   });
 
   it('renders LibraryPage by default on root route', async () => {
