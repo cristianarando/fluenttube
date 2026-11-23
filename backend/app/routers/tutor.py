@@ -60,6 +60,6 @@ async def explain_segment(
     explanation = await tutor_service.get_explanation(
         segment=segment,
         session=session,
-        language=req.language or "es",
+        language=req.language or "en",
     )
     return explanation

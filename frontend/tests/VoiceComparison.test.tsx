@@ -11,9 +11,9 @@ it('uploads the recorded take for this lesson and explains a silent microphone',
   const blob=new Blob(['take'],{type:'audio/webm'});
   const recorder={state:'recorded',devices:[],audioBlob:blob,audioUrl:'blob:take',refreshDevices:vi.fn()} as unknown as UseRecorderReturn;
   render(<VoiceComparison recorder={recorder} lessonId="fleece" word="sheep"/>);
-  expect(screen.getByLabelText('Tu grabación')).toHaveAttribute('src','blob:take');
-  fireEvent.click(screen.getByRole('button',{name:'Analizar y comparar con el ejemplo'}));
-  expect(await screen.findByText(/La toma tiene un nivel muy bajo/)).toBeInTheDocument();
+  expect(screen.getByLabelText('Your recording')).toHaveAttribute('src','blob:take');
+  fireEvent.click(screen.getByRole('button',{name:'Analyse and compare with example'}));
+  expect(await screen.findByText(/The recording level is very low/)).toBeInTheDocument();
   const [path,options]=vi.mocked(request).mock.calls[0];
   expect(path).toBe('/phonetics/voice/fleece');
   expect((options?.body as FormData).get('audio_file')).toBeInstanceOf(File);

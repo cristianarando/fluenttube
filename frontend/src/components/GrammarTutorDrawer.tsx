@@ -149,7 +149,7 @@ export const GrammarTutorDrawer: React.FC<GrammarTutorDrawerProps> = ({
                 Contextual Grammar Tutor
               </h2>
               <p className="text-[11px] text-text-secondary">
-                Spanish translation · English notes · British pronunciation
+                Plain-English paraphrase · Contextual notes · British pronunciation
               </p>
             </div>
           </div>
@@ -237,8 +237,8 @@ export const GrammarTutorDrawer: React.FC<GrammarTutorDrawerProps> = ({
           {drawerState === 'ready' && currentExplanation && (
             <div className="space-y-4 animate-fadeIn">
               <section className="p-4 rounded-panel bg-surface-raised border border-border space-y-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-accent">Spanish translation</h3>
-                <p lang="es" className="text-sm text-slate-200 leading-relaxed">{currentExplanation.spanish_translation}</p>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-accent">Plain-English Paraphrase</h3>
+                <p className="text-sm text-slate-200 leading-relaxed">{currentExplanation.spanish_translation}</p>
               </section>
               {/* Contextual Meaning */}
               <section className="p-4 rounded-panel bg-surface-raised border border-border space-y-2">

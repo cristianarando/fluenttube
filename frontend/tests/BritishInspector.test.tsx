@@ -23,13 +23,13 @@ const mockVocabResponse: VocabularyExplainResponseDTO = {
   lemma: 'put up with',
   part_of_speech: 'phrasal verb',
   meaning_en: 'To tolerate something unpleasant.',
-  translation: 'soportar; tolerar',
-  contextual_meaning: 'En esta frase, significa tolerar un ruido muy molesto.',
+  translation: 'tolerate; endure',
+  contextual_meaning: 'In this sentence, it means tolerating a very annoying noise.',
   usage_notes: ['Inseparable phrasal verb.'],
   examples: [
     {
       en: 'I cannot put up with that terrible noise.',
-      translation: 'No puedo soportar ese ruido terrible.',
+      translation: 'I can no longer tolerate that awful noise.',
     },
   ],
   collocations: ['put up with noise', 'put up with delays'],
@@ -71,7 +71,7 @@ describe('BritishInspector Component & Contextual Dictionary', () => {
       phonetic_uk: '/pʊt ʌp wɪð/',
       part_of_speech: 'phrasal verb',
       definition_en: 'To tolerate something.',
-      definition_es: 'Soportar algo.',
+      definition_es: null,
       example_en: null,
       audio_url: '/api/british/audio?text=put+up+with',
       cached: true,
@@ -91,16 +91,16 @@ describe('BritishInspector Component & Contextual Dictionary', () => {
       expect(vocabSpy).toHaveBeenCalledWith({
         segment_id: 101,
         term: 'put up with',
-        explanation_language: 'es',
+        explanation_language: 'en',
       });
       expect(dictSpy).toHaveBeenCalled();
     });
 
-    expect(await screen.findByText('soportar; tolerar')).toBeInTheDocument();
-    expect(screen.getByText(/En esta frase, significa tolerar un ruido muy molesto/i)).toBeInTheDocument();
+    expect(await screen.findByText('tolerate; endure')).toBeInTheDocument();
+    expect(screen.getByText(/In this sentence, it means tolerating a very annoying noise/i)).toBeInTheDocument();
     expect(screen.getByText('put up with noise')).toBeInTheDocument();
     expect(screen.queryByText(/llama3.2/)).toBeNull();
-    fireEvent.click(screen.getByRole('button',{name:'Practicar los sonidos de /pʊt ʌp wɪð/'}));
+    fireEvent.click(screen.getByRole('button',{name:'Practise sounds in /pʊt ʌp wɪð/'}));
     expect(openAtlas).toHaveBeenCalledWith({word:'put up with',ipa:'/pʊt ʌp wɪð/'});
   });
 
@@ -116,7 +116,7 @@ describe('BritishInspector Component & Contextual Dictionary', () => {
       phonetic_uk: '/ˈter.ə.bəl/',
       part_of_speech: 'adjective',
       definition_en: 'Extremely bad or serious.',
-      definition_es: 'Terrible o muy malo.',
+      definition_es: null,
       example_en: null,
       audio_url: '/api/british/audio?text=terrible',
       cached: false,

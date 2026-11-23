@@ -321,7 +321,7 @@ export const DictationBox: React.FC<DictationBoxProps> = ({
       textareaRef.current?.focus();
     } catch { return; }
 
-    setHintMessage(`Pista: "${nextUnmatched.text}"`);
+    setHintMessage(`Hint: "${nextUnmatched.text}"`);
     setTimeout(() => setHintMessage(null), 2000);
   }, [isAnswerVisible, targetNorm.display_tokens, matchedDisplayTokens, draft, setDraft, segment.id, session, ensureSession]);
 
@@ -778,7 +778,7 @@ export const DictationBox: React.FC<DictationBoxProps> = ({
 
             <div className="space-y-2 text-xs">
               <div className="flex items-center justify-between py-1.5 border-b border-border/50">
-                <span className="text-text-secondary">Pista siguiente palabra</span>
+                <span className="text-text-secondary">Fill next word hint</span>
                 <kbd className="px-2 py-0.5 rounded bg-surface-raised border border-border font-mono text-accent">
                   Tab + Tab
                 </kbd>

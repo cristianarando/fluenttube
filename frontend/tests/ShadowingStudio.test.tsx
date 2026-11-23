@@ -276,7 +276,7 @@ describe('ShadowingStudio Component & Recording Lifecycle', () => {
       expect(useStudyStore.getState().isRecording).toBe(false);
 
       // Playback UI rendered
-      expect(screen.getByText('Tu grabación')).toBeInTheDocument();
+      expect(screen.getByText('Your recording')).toBeInTheDocument();
       expect(screen.getByRole('region', {name:'Original audio diagram'})).toBeInTheDocument();
       expect(screen.getByLabelText('Playback your recorded speech')).not.toHaveAttribute('controls');
       expect(screen.getByTestId('waveform-card')).toBeInTheDocument();

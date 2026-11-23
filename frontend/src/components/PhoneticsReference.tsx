@@ -1,22 +1,22 @@
 import { useState } from 'react';
 
 const checks = [
-  { question:'¿Qué señala ˈ en /bəˈnɑːnə/?', choices:['La sílaba siguiente lleva el acento principal','La vocal anterior es larga'], correct:0, lesson:'primary', tip:'La marca va antes de la sílaba acentuada: NA en banana.' },
-  { question:'Al pasar de fan a van, ¿qué cambia principalmente?', choices:['El punto de contacto','La vibración laríngea'], correct:1, lesson:'v', tip:'Mantén los incisivos cerca del labio inferior y añade voz para /v/.' },
-  { question:'¿Qué ocurre dentro de la vocal de light?', choices:['Se desliza hacia una posición más alta y anterior','La lengua permanece en la misma posición'], correct:0, lesson:'price', tip:'El movimiento de /aɪ/ ocurre dentro de una sola sílaba.' },
+  { question:'What does ˈ indicate in /bəˈnɑːnə/?', choices:['The following syllable carries primary stress','The preceding vowel is long'], correct:0, lesson:'primary', tip:'The stress mark precedes the prominent syllable: NA in banana.' },
+  { question:'When moving from fan to van, what changes primarily?', choices:['The point of contact','Vocal fold vibration (voicing)'], correct:1, lesson:'v', tip:'Keep the upper incisors near the lower lip and add voicing for /v/.' },
+  { question:'What happens during the vowel in light?', choices:['The tongue glides towards a closer, front position','The tongue remains in a fixed position'], correct:0, lesson:'price', tip:'The movement of /aɪ/ happens smoothly within a single syllable.' },
 ];
 
 export function PhoneticsReference({disabled,onPractice}:{disabled:boolean;onPractice:(id:string)=>void}) {
   const [answers,setAnswers] = useState<Record<number,number>>({});
-  return <details className="rounded-panel border border-border p-4" lang="es"><summary className="cursor-pointer font-semibold">Guía de consulta y diagnóstico inicial</summary>
+  return <details className="rounded-panel border border-border p-4"><summary className="cursor-pointer font-semibold">Reference guide and initial diagnostic</summary>
     <div className="mt-4 space-y-4 text-sm">
-      <section><h3>E1 · Cómo leer la tabla</h3><p>Las barras indican fonemas: /ʃ/ es el primer sonido de ship. Los corchetes muestran cómo se realiza un sonido: [pʰ] incluye el soplo de pin. ˈ y ˌ van antes de la sílaba acentuada; ː va después de la vocal larga.</p></section>
-      <section><h3>E2 · Encuentra un punto de partida</h3><p>Estas tres preguntas orientan tu práctica de conceptos; no evalúan tu voz.</p>
+      <section><h3>E1 · Reading the chart</h3><p>Slashes indicate phonemes: /ʃ/ is the opening sound in ship. Square brackets show phonetic realisation: [pʰ] includes the burst of air in pin. ˈ and ˌ precede the stressed syllable; ː follows a long vowel.</p></section>
+      <section><h3>E2 · Find a starting point</h3><p>These three quick checks help orient your conceptual practice; they do not grade your voice.</p>
         {checks.map((c,i)=><div key={c.lesson} className="mt-3"><p>{c.question}</p><div className="flex flex-wrap gap-2 my-1">{c.choices.map((s,j)=><button key={s} className="secondary-button" aria-pressed={answers[i]===j} onClick={()=>setAnswers(a=>({...a,[i]:j}))}>{s}</button>)}</div>
-          {answers[i]!==undefined && <p role="status">{answers[i]===c.correct ? 'Correcto. ' : 'Fíjate en esto: '}{c.tip} <button className="quiet-button" disabled={disabled} onClick={()=>onPractice(c.lesson)}>Abrir ficha</button></p>}</div>)}</section>
-      <section><h3>E3 · Si hablas español</h3><p>Si oyes lo mismo en ship y sheep, alterna las dos fichas y escucha el cambio de calidad. Si añades una vocal antes de stop, ensaya primero /s/ y enlázala con /t/. Elige solo la dificultad que reconozcas en tu propia voz.</p></section>
-      <section><h3>E4 · Contrastes y variantes</h3><p>La tabla toma como referencia el inglés del sur de Gran Bretaña. NEAR, SQUARE y CURE pueden variar entre hablantes; una transcripción tradicional no obliga a todos a producir el mismo deslizamiento. Consulta también el <a className="underline" href="https://www.internationalphoneticassociation.org/content/ipa-chart" target="_blank" rel="noreferrer">cuadro de la Asociación Fonética Internacional</a> para situar los símbolos.</p></section>
-      <section><h3>E5 · Ortografía y sonido</h3><p>La secuencia ea se oye de formas distintas en sea y head. A la inversa, see y sea se pronuncian igual en esta variedad. Consulta la palabra completa antes de generalizar una regla.</p></section>
-      <section><h3>E6 · Glosario · edición 1</h3><dl><dt>Par mínimo</dt><dd>Dos palabras que se distinguen por un solo fonema, como fan y van.</dd><dt>Sonoridad</dt><dd>Vibración de los pliegues vocales durante una articulación.</dd><dt>Acento léxico</dt><dd>Prominencia relativa de una sílaba dentro de una palabra.</dd><dt>Entonación</dt><dd>Movimiento de la altura de la voz a lo largo de un enunciado.</dd></dl></section>
+          {answers[i]!==undefined && <p role="status">{answers[i]===c.correct ? 'Correct. ' : 'Note this: '}{c.tip} <button className="quiet-button" disabled={disabled} onClick={()=>onPractice(c.lesson)}>Open lesson</button></p>}</div>)}</section>
+      <section><h3>E3 · Common interference patterns</h3><p>If ship and sheep sound identical to you, alternate both lessons and listen closely to vowel quality as well as length. If you tend to insert a vowel before stop clusters, hold /s/ cleanly first and link smoothly into /t/. Focus only on contrasts you notice in your own speech.</p></section>
+      <section><h3>E4 · Contrasts and regional variation</h3><p>This chart uses Southern Standard British English as its baseline. NEAR, SQUARE, and CURE vary widely across speakers; a traditional transcription does not force every speaker to produce the same glide. You can also consult the <a className="underline" href="https://www.internationalphoneticassociation.org/content/ipa-chart" target="_blank" rel="noreferrer">International Phonetic Association chart</a> to locate symbols.</p></section>
+      <section><h3>E5 · Spelling and sound</h3><p>The spelling ea sounds completely different in sea and head. Conversely, see and sea share the exact same pronunciation in this variety. Always check the whole word before generalising a spelling rule.</p></section>
+      <section><h3>E6 · Glossary · edition 1</h3><dl><dt>Minimal pair</dt><dd>Two words distinguished by a single phoneme, such as fan and van.</dd><dt>Voicing</dt><dd>Vibration of the vocal folds during articulation.</dd><dt>Lexical stress</dt><dd>Relative prominence of a syllable within a word.</dd><dt>Intonation</dt><dd>Movement of vocal pitch across an utterance.</dd></dl></section>
     </div></details>;
 }

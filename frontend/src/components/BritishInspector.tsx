@@ -115,7 +115,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
         .explainVocabulary({
           segment_id: segment.id,
           term: term,
-          explanation_language: 'es',
+          explanation_language: 'en',
         })
         .then((res) => {
           if (activeLookupKeyRef.current === lookupKey) {
@@ -174,7 +174,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
       .explainVocabulary({
         segment_id: segment.id,
         term: term,
-        explanation_language: 'es',
+        explanation_language: 'en',
       })
       .then((res) => {
         if (activeLookupKeyRef.current === lookupKey) {
@@ -304,7 +304,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                         <p className="text-xs text-text-muted mt-1">British IPA unavailable for this word.</p>
                       )}
                       {openWordAtlas && dictEntry && (dictEntry.phonetic_uk ? [dictEntry.phonetic_uk] : dictEntry.ipa_options || []).map(ipa =>
-                        <button key={ipa} className="quiet-button" onClick={() => openWordAtlas({word: currentTerm || selectedWord, ipa})}>Practicar los sonidos de {ipa}</button>)}
+                        <button key={ipa} className="quiet-button" onClick={() => openWordAtlas({word: currentTerm || selectedWord, ipa})}>Practise sounds in {ipa}</button>)}
 
                     </div>
                     <button
@@ -360,19 +360,19 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                         className="mt-2 px-2.5 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 text-[11px] font-medium transition-colors inline-flex items-center gap-1.5"
                       >
                         <RotateCcw className="w-3 h-3" />
-                        <span>Reintentar análisis de vocabulario</span>
+                        <span>Retry vocabulary analysis</span>
                       </button>
                     </div>
                   </div>
                 )}
 
-                {/* Contextual Meaning & Translation Card (Local AI) */}
+                {/* Contextual Meaning & Gloss Card */}
                 {vocabResult && (
                   <div className="p-3 rounded-xl bg-background/60 border border-border space-y-2">
                     <div className="flex items-center justify-between">
                       <h4 className="text-[11px] font-bold uppercase tracking-wider text-accent flex items-center gap-1">
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>Traducción & Contexto</span>
+                        <span>Gloss & Context</span>
                       </h4>
                     </div>
 
@@ -394,7 +394,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                 {vocabResult?.collocations && vocabResult.collocations.length > 0 && (
                   <div className="p-3 rounded-xl bg-surface-raised/60 border border-border space-y-1.5">
                     <h4 className="text-[10px] font-bold uppercase tracking-wider text-text-secondary">
-                      Collocations & Fórmulas habituales
+                      Collocations & Common Patterns
                     </h4>
                     <div className="flex flex-wrap gap-1.5 pt-0.5">
                       {vocabResult.collocations.map((col, idx) => (
@@ -456,7 +456,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                 <div className="p-3 rounded-xl bg-surface-raised border border-border space-y-1.5">
                   <div className="flex items-center gap-1.5 text-accent text-xs font-bold">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>Significado en Contexto</span>
+                    <span>Contextual Meaning</span>
                   </div>
                   <p className="text-xs text-text-primary leading-relaxed">
                     {tutorExplanation.contextual_meaning}
@@ -484,7 +484,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                 {tutorExplanation.key_vocabulary && tutorExplanation.key_vocabulary.length > 0 && (
                   <div className="p-3 rounded-xl bg-background/60 border border-border space-y-2">
                     <h4 className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
-                      Vocabulario & Phrasal Verbs
+                      Vocabulary & Phrasal Verbs
                     </h4>
                     <div className="space-y-2">
                       {tutorExplanation.key_vocabulary.map((vocab, idx) => (
@@ -508,7 +508,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                   <div className="p-3 rounded-xl bg-danger/10 border border-danger/30 text-left space-y-2 mb-3">
                     <div className="flex items-center gap-2 text-danger font-bold text-xs uppercase tracking-wider">
                       <AlertCircle className="w-4 h-4 shrink-0" />
-                      <span>Error al obtener análisis</span>
+                      <span>Unable to load analysis</span>
                     </div>
                     <p className="text-xs text-slate-300 leading-relaxed font-sans">{tutorError}</p>
                   </div>
@@ -518,9 +518,9 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                   </div>
                 )}
                 <div>
-                  <p className="text-xs font-semibold text-text-secondary">Connected Speech & Gramática B2</p>
+                  <p className="text-xs font-semibold text-text-secondary">Connected Speech & B2 Grammar</p>
                   <p className="text-[11px] text-text-muted mt-1 max-w-[220px] mx-auto">
-                    Termina de dictar la frase o pulsa el botón para obtener el desglose pedagógico.
+                    Complete the dictation or click below for a contextual breakdown.
                   </p>
                 </div>
                 <button
@@ -529,7 +529,7 @@ export const BritishInspector: React.FC<BritishInspectorProps> = ({
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-accent text-white text-xs font-semibold hover:bg-accent/90 transition-colors shadow-sm"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>{tutorError ? 'Reintentar explicación' : 'Explicar esta oración'}</span>
+                  <span>{tutorError ? 'Retry explanation' : 'Explain this sentence'}</span>
                 </button>
               </div>
             )}

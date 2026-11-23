@@ -172,7 +172,7 @@ export const apiClient = {
     ),
   explainSegment: (
     segmentId: number,
-    language: string = 'es'
+    language: string = 'en'
   ): Promise<import('./types').TutorExplanationDTO> =>
     request<import('./types').TutorExplanationDTO>('/tutor/explain', {
       method: 'POST',

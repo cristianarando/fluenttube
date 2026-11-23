@@ -12,7 +12,7 @@ beforeEach(() => {
   vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {});
   vi.mocked(request).mockImplementation(async (path) => {
     if (path === '/phonetics/catalog') return { catalog: [{ ipa: 'ɪ', category: 'Vowels', lesson_id: 'kit' }],
-      lessons: [{ id: 'kit', ipa: 'ɪ', word: 'ship', name: 'KIT', guide_es: 'Guía', diagram: {kind:'vowel', points:[[.2,.2]], lips:'relaxed'} }] } as never;
+      lessons: [{ id: 'kit', ipa: 'ɪ', word: 'ship', name: 'KIT', guide_es: 'Guide', diagram: {kind:'vowel', points:[[.2,.2]], lips:'relaxed'} }] } as never;
     if (path === '/phonetics/reviews') return { items: [{ lesson_id: 'kit', attempts: 0, correct: 0, due: true, due_at: new Date().toISOString() }] } as never;
     if (path.endsWith('/answer')) return { correct: true, answer_ipa: 'ɪ', word: 'ship' } as never;
     return { id: 'opaque', options: [{ id: 'kit', ipa: 'ɪ' }, { id: 'fleece', ipa: 'iː' }] } as never;
@@ -27,9 +27,9 @@ it('keeps affricates and diphthongs together when entering the atlas from the in
 it('distinguishes voicing for two sounds made at the same contact point', () => {
   const base = {kind:'consonant',place:'labiodental',manner:'fricative'} as const;
   const {rerender} = render(<ArticulationPlate ipa="f" model={{...base,voiced:false}} progress={0}/>);
-  expect(screen.getByRole('img',{name:/Incisivos.*Sorda/})).toBeInTheDocument();
+  expect(screen.getByRole('img',{name:/Upper incisors.*Voiceless/})).toBeInTheDocument();
   rerender(<ArticulationPlate ipa="v" model={{...base,voiced:true}} progress={0}/>);
-  expect(screen.getByRole('img',{name:/Incisivos.*Sonora/})).toBeInTheDocument();
+  expect(screen.getByRole('img',{name:/Upper incisors.*Voiced/})).toBeInTheDocument();
 });
 
 it('opens a lesson, listens to an opaque quiz, answers and returns', async () => {
@@ -37,7 +37,7 @@ it('opens a lesson, listens to an opaque quiz, answers and returns', async () =>
   render(<PhoneticsLab onClose={close} />);
   await screen.findByText('/ɪ/ · ship');
   expect(screen.getByText(/Static pose/)).toBeInTheDocument();
-  fireEvent.click(screen.getByText(/Práctica de oído opcional/));
+  fireEvent.click(screen.getByText(/Optional ear training/));
   fireEvent.click(screen.getByRole('button', { name: 'Start listening exercise' }));
   const option = await screen.findByRole('button', { name: '/iː/' });
   expect(option).toBeDisabled();
