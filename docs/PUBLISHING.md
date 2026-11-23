@@ -44,4 +44,4 @@ Create an empty GitHub repository with the desired visibility. Add its actual UR
 
 ## Repository automation
 
-The GitHub workflow checks common credential formats (including available Git history), runs frontend tests, and builds the frontend. Backend tests are run locally with `npm run test:backend`.
+The GitHub Actions workflow runs credential scanning across the working tree and Git history (`scripts/check_secrets.py --history`), verifies frontend TypeScript types, Vitest tests, and the Vite production build, and executes the backend `pytest` suite on Ubuntu with FFmpeg and CPU-compatible Python dependencies.

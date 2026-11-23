@@ -4,7 +4,9 @@
 
 **A local-first English practice app built around videos you care about.**
 
-React · TypeScript · FastAPI · SQLite · Faster-Whisper
+[![Repository checks](https://github.com/cristianarando/fluenttube/actions/workflows/checks.yml/badge.svg)](https://github.com/cristianarando/fluenttube/actions/workflows/checks.yml)
+
+**Local-First Desktop Web App** · React · TypeScript · FastAPI · SQLite · Faster-Whisper
 
 [Screenshots](#screenshots) · [Getting started](#getting-started) · [Architecture](#architecture) · [Documentation](docs/README.md)
 
@@ -118,6 +120,14 @@ flowchart LR
 ```
 
 The frontend uses TanStack Query for server state, Zustand for practice state, and Tailwind CSS for the interface. The backend owns scoring and persistence. SQLite uses WAL mode and foreign keys. Long imports run in a bounded worker queue, with checkpoints for local transcription.
+
+### Engineering highlights & technical trade-offs
+
+- **Intentional local-first hosting model:** Video transcoding, Faster-Whisper speech recognition (CPU or local NVIDIA GPU), Praat acoustic analysis, and SQLite state run directly on the user's machine (`127.0.0.1`). Avoiding multi-tenant cloud infrastructure removes GPU hosting costs, keeps private videos and voice recordings on disk, and allows byte-range local video streaming (`GET`/`HEAD`) without upload latency.
+- **Loopback security boundary:** Because the backend serves local media and mutates the local database, [main.py](backend/app/main.py) restricts bindings to loopback addresses and enforces strict `Host` (`localhost`, `127.0.0.1`), `Origin` validation on mutating requests, and scoped CORS headers.
+- **Fault-tolerant long media imports:** [local_video.py](backend/app/services/local_video.py) splits local transcription into 300-second chunks (`TRANSCRIPTION_CHUNK_SECONDS = 300`) with atomic `.transcript.json` checkpoints and lossless MP4 `faststart` remuxing (`.playback.mp4`), allowing interrupted long-form imports to resume without re-uploading or re-transcribing completed chunks.
+- **Resilient SQLite concurrency & migrations:** [database.py](backend/app/database.py) enables `PRAGMA foreign_keys=ON`, `journal_mode=WAL`, and a `5000 ms` busy timeout, and takes an online SQLite backup (`.pre-phonetics-<uuid>.bak`) inside an immediate transaction safeguard before running Alembic migrations.
+- **Deterministic alignment & zero-token offline dictionaries:** [aligner.py](backend/app/services/aligner.py) scores dictation and shadowing using NFKC Unicode normalization, contraction expansion, and token-level Levenshtein distance with deterministic tie-breaking (`diagonal > omission > insertion`), while [prosody.py](backend/app/services/prosody.py) extracts speaker-normalized median-semitone pitch (`praat-parselmouth`, `50–600 Hz` at `10 ms` steps). Offline dictionaries ([pronunciation_lexicon.py](backend/app/services/pronunciation_lexicon.py) and [local_dictionary.py](backend/app/services/local_dictionary.py)) lazy-load bundled Britfone, `ipa-dict` UK, and Princeton WordNet 3.0 data in memory with `@lru_cache(maxsize=1)` and zero external API calls.
 
 ```text
 backend/
