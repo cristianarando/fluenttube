@@ -21,8 +21,8 @@ const mockSegment: SegmentDTO = {
 
 const mockExplanation: TutorExplanationDTO = {
   segment_id: 42,
-  language: 'es',
-  spanish_translation: "Estoy intentando entender cómo funciona esto.",
+  language: 'en',
+  spanish_translation: "I'm trying to make sense of how this works.",
   contextual_meaning: 'The speaker is trying to understand how something works.',
   key_vocabulary: [
     {

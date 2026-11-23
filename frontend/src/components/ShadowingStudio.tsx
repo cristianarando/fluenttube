@@ -198,7 +198,7 @@ export const ShadowingStudio: React.FC<ShadowingStudioProps> = ({
       ws.on('play', () => setIsPlayingWave(true));
       ws.on('pause', () => setIsPlayingWave(false));
       ws.on('finish', () => setIsPlayingWave(false));
-      ws.on('error', () => setEvalError('La forma de onda no se pudo cargar. El botón de reproducción permite escuchar la toma.'));
+      ws.on('error', () => setEvalError('Could not load waveform. Use the play button to listen to your recording.'));
 
       wavesurferRef.current = ws;
     } catch (err) {
@@ -222,13 +222,13 @@ export const ShadowingStudio: React.FC<ShadowingStudioProps> = ({
   const toggleWavePlayback = useCallback(() => {
     if (wavesurferRef.current) {
       try {
-        void Promise.resolve(wavesurferRef.current.playPause()).catch(()=>{void recordedAudioRef.current?.play().catch(()=>setEvalError('No se pudo reproducir la toma. Graba de nuevo.'));});
+        void Promise.resolve(wavesurferRef.current.playPause()).catch(()=>{void recordedAudioRef.current?.play().catch(()=>setEvalError('Could not play recording. Please record again.'));});
       } catch (err) {
         console.warn('Error during WaveSurfer playPause:', err);
       }
     } else if(recordedAudioRef.current) {
       const audio=recordedAudioRef.current;
-      if(audio.paused)void audio.play().catch(()=>setEvalError('No se pudo reproducir la toma. Graba de nuevo.'));else audio.pause();
+      if(audio.paused)void audio.play().catch(()=>setEvalError('Could not play recording. Please record again.'));else audio.pause();
     }
   }, []);
 
@@ -444,7 +444,7 @@ export const ShadowingStudio: React.FC<ShadowingStudioProps> = ({
               className="p-4 rounded-control bg-surface-raised border border-border/90 space-y-3.5"
             >
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-white">Tu grabación</span>
+                <span className="font-semibold text-white">Your recording</span>
                 <span className="font-mono text-text-secondary text-[11px]">
                   Duration: {durationSeconds.toFixed(1)}s / 30.0s
                 </span>
@@ -490,7 +490,7 @@ export const ShadowingStudio: React.FC<ShadowingStudioProps> = ({
                 onEnded={()=>setIsPlayingWave(false)}
                 aria-label="Playback your recorded speech"
               />
-              {currentEval?.prosody?.recording && <Contour features={currentEval.prosody.recording} label="Tu grabación"/>}
+              {currentEval?.prosody?.recording && <Contour features={currentEval.prosody.recording} label="Your recording"/>}
 
               {/* Evaluation Error Banner */}
               {evalError && (
@@ -601,14 +601,14 @@ export const ShadowingStudio: React.FC<ShadowingStudioProps> = ({
 
           {/* T19 Full Evaluation Feedback & Score Breakdown Section */}
           {!audioUrl && currentEval?.prosody && <div className="space-y-3" aria-label="Previous recording analysis">
-            <p className="text-xs text-text-muted">Última toma evaluada · audio no conservado</p>
-            {currentEval.prosody.recording && <Contour features={currentEval.prosody.recording} label="Tu grabación"/>}
+            <p className="text-xs text-text-muted">Last evaluated take · audio not retained</p>
+            {currentEval.prosody.recording && <Contour features={currentEval.prosody.recording} label="Your recording"/>}
           </div>}
           </div>
           <div className="shadow-feedback space-y-3" aria-label="Evaluation details">
-          <h4 className="text-xs font-semibold uppercase text-text-secondary">Evaluación</h4>
-          {!currentEval && <p className="text-sm text-text-secondary">Graba una toma y pulsa Evaluate speech para comparar tus resultados.</p>}
-          {currentEval?.prosody && <p className="text-xs text-text-muted">Tono relativo a la mediana de cada voz · escalas compartidas, duración independiente. Sigue las subidas y bajadas en tu registro cómodo. Análisis experimental.</p>}
+          <h4 className="text-xs font-semibold uppercase text-text-secondary">Evaluation</h4>
+          {!currentEval && <p className="text-sm text-text-secondary">Record a take and click Evaluate speech to compare your results.</p>}
+          {currentEval?.prosody && <p className="text-xs text-text-muted">Pitch relative to each voice median · shared scale, independent duration. Follow the rises and falls within your comfortable vocal range. Experimental analysis.</p>}
           {currentEval && currentEval.status && (
             <div
               role="region"

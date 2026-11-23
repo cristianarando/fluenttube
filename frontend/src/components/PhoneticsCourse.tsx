@@ -14,7 +14,7 @@ function UnitPractice({ unit, onComplete }: { unit: Unit; onComplete: () => void
     try {
       setQuestion(await request<Question>(`/phonetics/quizzes/${unit.id}`, { method:'POST' }));
       setFeedback('');
-    } catch { setError('No se pudo cargar la actividad. Vuelve a intentarlo.'); }
+    } catch { setError('Could not load the activity. Please try again.'); }
     finally { setBusy(false); }
   }
   async function choose(option: string) {
@@ -23,17 +23,17 @@ function UnitPractice({ unit, onComplete }: { unit: Unit; onComplete: () => void
     try {
       const result = await request<{correct:boolean; solution:string; explanation:string}>(`/phonetics/quizzes/${question.id}/answer`, {
         method:'POST', body:JSON.stringify({selected_id:option}) });
-      setFeedback((result.correct ? 'Correcto. ' : 'Respuesta: ' + result.solution + '. ') + result.explanation);
+      setFeedback((result.correct ? 'Correct. ' : 'Answer: ' + result.solution + '. ') + result.explanation);
       if (result.correct) onComplete();
-    } catch { setError('No se pudo guardar. Reintenta la misma respuesta.'); }
+    } catch { setError('Could not save your answer. Retry the same choice.'); }
     finally { setBusy(false); }
   }
-  return <article className="space-y-3 mt-3 rounded-panel bg-surface p-4" lang="es">
+  return <article className="space-y-3 mt-3 rounded-panel bg-surface p-4">
     <h3 className="text-xl">{unit.id} · {unit.title}</h3><p>{unit.instruction}</p>
     <blockquote lang="en" className="border-l-2 border-accent pl-3 text-lg">{unit.example}</blockquote>
-    <audio aria-label="Ejemplo de la unidad" controls preload="none" src={phoneticsAudioUrl('/audio/'+unit.id)} onError={() => setError('Audio no disponible. Puedes seguir con la lectura y la actividad.')} />
-    <p className="text-sm text-text-muted">Voz sintética para escuchar las palabras. Ensaya tú los cambios de intención, ritmo o variedad que pide la consigna.</p>
-    <button className="secondary-button" disabled={busy} onClick={begin}>{question ? 'Repetir actividad' : 'Comprobar lo aprendido'}</button>
+    <audio aria-label="Unit example" controls preload="none" src={phoneticsAudioUrl('/audio/'+unit.id)} onError={() => setError('Audio unavailable. You can continue with the reading and activity.')} />
+    <p className="text-sm text-text-muted">Synthetic voice for lexical reference. Practise the shifts in intention, rhythm or variety described in the prompt.</p>
+    <button className="secondary-button" disabled={busy} onClick={begin}>{question ? 'Repeat activity' : 'Check understanding'}</button>
     {question && <><p>{question.prompt}</p><div className="flex flex-wrap gap-2">{question.options.map(opt => <button key={opt.id} className="secondary-button" disabled={busy || !!feedback} onClick={() => choose(opt.id)}>{opt.label}</button>)}</div></>}
     {feedback && <p role="status">{feedback}</p>}{error && <p role="alert">{error}</p>}
   </article>;
@@ -51,12 +51,12 @@ export function PhoneticsCourse() {
     return () => { active=false; };
   },[retry]);
   const unit = units[index];
-  if (error) return <button onClick={() => setRetry(n => n+1)}>Reintentar carga del curso</button>;
-  if (!unit) return <p role="status">Cargando unidades…</p>;
-  return <div className="py-3"><label>Unidad del curso <select className="bg-surface p-2 max-w-full" value={index} onChange={e => setIndex(Number(e.target.value))}>
+  if (error) return <button onClick={() => setRetry(n => n+1)}>Retry loading course</button>;
+  if (!unit) return <p role="status">Loading units…</p>;
+  return <div className="py-3"><label>Course unit <select className="bg-surface p-2 max-w-full" value={index} onChange={e => setIndex(Number(e.target.value))}>
     {units.map((u,i) => <option key={u.id} value={i}>{u.completed ? '✓ ' : ''}{u.id} · {u.title}</option>)}</select></label>
-    <p className="text-xs mt-2">{units.filter(u => u.completed).length} de {units.length} unidades con respuesta correcta</p>
+    <p className="text-xs mt-2">{units.filter(u => u.completed).length} of {units.length} units completed</p>
     <UnitPractice key={unit.id} unit={unit} onComplete={() => setUnits(rows => rows.map(u => u.id===unit.id ? {...u,completed:true} : u))}/>
-    <div className="flex justify-between mt-3"><button className="quiet-button" disabled={index===0} onClick={() => setIndex(index-1)}>Anterior</button>
-      <button className="quiet-button" disabled={index===units.length-1} onClick={() => setIndex(index+1)}>Siguiente unidad</button></div></div>;
+    <div className="flex justify-between mt-3"><button className="quiet-button" disabled={index===0} onClick={() => setIndex(index-1)}>Previous</button>
+      <button className="quiet-button" disabled={index===units.length-1} onClick={() => setIndex(index+1)}>Next unit</button></div></div>;
 }

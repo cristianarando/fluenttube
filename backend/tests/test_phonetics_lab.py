@@ -47,7 +47,7 @@ def test_quiz_answer_is_hidden_and_review_persists(tmp_path):
         assert len(units) == len({u['id'] for u in units}) == 60
         assert all('solution' not in u and u['instruction'] for u in units)
         quiz = client.post('/api/phonetics/quizzes/D60').json()
-        choice = next(o['id'] for o in quiz['options'] if o['label'] == 'Que el oyente entienda el número')
+        choice = next(o['id'] for o in quiz['options'] if o['label'] == 'That the listener understands the number')
         outcome = client.post(f"/api/phonetics/quizzes/{quiz['id']}/answer", json={'selected_id': choice})
         assert outcome.json()['correct'] and outcome.json()['explanation']
         assert client.get('/api/phonetics/course').json()[-1]['completed']

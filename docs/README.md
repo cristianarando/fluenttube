@@ -1,6 +1,6 @@
 # Documentation
 
-Start with the [English README](../README.md) or [Spanish guide](../README.es.md) for installation and current features.
+Start with the [main README](../README.md) for installation, local-first setup and current features.
 
 | Document | Purpose |
 | --- | --- |

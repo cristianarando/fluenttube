@@ -99,13 +99,13 @@ SAMPLE_VOCAB_RESPONSE = {
     "lemma": "put up with",
     "part_of_speech": "phrasal verb",
     "meaning_en": "To tolerate something unpleasant or annoying.",
-    "translation": "soportar; tolerar",
-    "contextual_meaning": "En esta frase, significa soportar un ruido muy molesto.",
+    "translation": "tolerate; endure",
+    "contextual_meaning": "In this sentence, it means tolerating a very annoying noise.",
     "usage_notes": ["Inseparable: put up with + noun/pronoun."],
     "examples": [
         {
             "en": "I cannot put up with that terrible noise any longer.",
-            "translation": "Ya no puedo soportar ese ruido terrible por más tiempo.",
+            "translation": "I can no longer endure that awful noise.",
         }
     ],
     "collocations": ["put up with noise", "put up with rudeness"],
@@ -131,7 +131,7 @@ def test_vocabulary_explain_success(client: TestClient, db_session: Session, mon
             "term": "put up with",
             "selection_start": 9,
             "selection_end": 20,
-            "explanation_language": "es",
+            "explanation_language": "en",
         },
     )
 
@@ -140,9 +140,9 @@ def test_vocabulary_explain_success(client: TestClient, db_session: Session, mon
     assert data["term"] == "put up with"
     assert data["lemma"] == "put up with"
     assert data["part_of_speech"] == "phrasal verb"
-    assert data["translation"] == "soportar; tolerar"
+    assert data["translation"] == "tolerate; endure"
     assert data["meaning_en"] == "To tolerate something unpleasant or annoying."
-    assert "soportar un ruido" in data["contextual_meaning"]
+    assert "tolerating a very annoying noise" in data["contextual_meaning"]
     assert len(data["examples"]) == 1
     assert data["cached"] is False
     assert data["provider"] == "ollama"
@@ -173,7 +173,7 @@ def test_vocabulary_cache_hit_and_offline_resilience(
     # First call - cache miss
     res1 = client.post(
         "/api/vocabulary/explain",
-        json={"segment_id": seg.id, "term": "put up with", "explanation_language": "es"},
+        json={"segment_id": seg.id, "term": "put up with", "explanation_language": "en"},
     )
     assert res1.status_code == 200
     assert res1.json()["cached"] is False
@@ -186,11 +186,11 @@ def test_vocabulary_cache_hit_and_offline_resilience(
     # Second call - should return from cache directly without error (F-13)
     res2 = client.post(
         "/api/vocabulary/explain",
-        json={"segment_id": seg.id, "term": "put up with", "explanation_language": "es"},
+        json={"segment_id": seg.id, "term": "put up with", "explanation_language": "en"},
     )
     assert res2.status_code == 200
     assert res2.json()["cached"] is True
-    assert res2.json()["translation"] == "soportar; tolerar"
+    assert res2.json()["translation"] == "tolerate; endure"
 
 
 def test_vocabulary_explain_repair_retry(
@@ -220,7 +220,7 @@ def test_vocabulary_explain_repair_retry(
 
     res = client.post(
         "/api/vocabulary/explain",
-        json={"segment_id": seg.id, "term": "put up with", "explanation_language": "es"},
+        json={"segment_id": seg.id, "term": "put up with", "explanation_language": "en"},
     )
     assert res.status_code == 200
     assert res.json()["term"] == "put up with"

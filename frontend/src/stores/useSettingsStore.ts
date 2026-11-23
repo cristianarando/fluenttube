@@ -24,7 +24,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   autoLoop: true,
   autoAdvance: false,
   soundEffect: true,
-  explanationLanguage: 'es',
+  explanationLanguage: 'en',
 };
 
 function loadStoredPreferences(): UserPreferences {

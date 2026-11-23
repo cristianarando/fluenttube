@@ -6,7 +6,7 @@
 
 React · TypeScript · FastAPI · SQLite · Faster-Whisper
 
-[Español](README.es.md) · [Screenshots](#screenshots) · [Getting started](#getting-started) · [Architecture](#architecture) · [Documentation](docs/README.md)
+[Screenshots](#screenshots) · [Getting started](#getting-started) · [Architecture](#architecture) · [Documentation](docs/README.md)
 
 </div>
 
@@ -22,7 +22,7 @@ FluentTube turns English speech into short exercises. Import a video, listen to 
 - **Speaking practice:** record yourself, compare original and recorded audio, and review recognised words, timing and experimental pitch contours.
 - **Phonetics Lab:** explore sound guides, articulation diagrams, listening quizzes, scheduled reviews and a guided course.
 - **A personal library:** search, filters, progress, resume, review completed videos and remove unwanted videos with confirmation.
-- **One-click sentence explanations:** direct Spanish translation, followed by English explanations, useful vocabulary, idioms, phrasal verbs, examples and British connected-speech tips when an optional tutor is configured.
+- **One-click sentence explanations:** plain-English paraphrase, contextual meaning, useful vocabulary, idioms, phrasal verbs, examples and British connected-speech tips when an optional tutor is configured.
 - **A quieter workspace:** the video stays visible above the scrolling sentence list on desktop. Compact study notes dismiss with an outside click or Escape; study tools share the footer without overlapping.
 - **Recoverable imports:** long local transcriptions save completed five-minute parts and can resume after a restart.
 

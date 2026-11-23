@@ -127,7 +127,7 @@ Existing library rows without local media retain their practice history and repo
 
 ## Sentence Explanation Profile
 
-Opening the sentence tutor generates the explanation immediately. The fixed profile returns `spanish_translation` as a direct Spanish translation. All other content uses English: contextual meaning, useful vocabulary/idioms/phrasal verbs with a required `example` per item, and text-based British connected-speech tips. Legacy language preferences do not change this profile. The `sentence-british-v2` prompt version invalidates older cached responses.
+Opening the sentence tutor generates the explanation immediately. For backwards schema compatibility, the `spanish_translation` field is retained while returning a concise plain-English paraphrase in the all-English immersion profile (`sentence-british-v2`). All other fields also use English: contextual meaning, useful vocabulary/idioms/phrasal verbs with a required `example` per item, and text-based British connected-speech tips. Legacy language preferences do not change this profile.
 
 ## Hyphenated dictation words
 

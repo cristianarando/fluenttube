@@ -74,7 +74,7 @@ describe('SettingsPage Component', () => {
   it('shows the fixed sentence explanation format', () => {
     renderWithClient(<SettingsPage onBackToLibrary={vi.fn()} />);
     expect(screen.queryByLabelText(/Tutor Explanation Language/i)).toBeNull();
-    expect(screen.getByText(/Sentence explanations use a Spanish translation/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sentence explanations provide a plain-English paraphrase/i)).toBeInTheDocument();
   });
 
   it('renders configuration guide and does NOT render any password or secret key inputs', () => {

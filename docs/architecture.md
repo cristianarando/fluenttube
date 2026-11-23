@@ -26,6 +26,6 @@ Bundled data, original licenses, source revisions and hashes live in `backend/ap
 
 ## Optional online features
 
-The AI tutor supplies separate contextual explanations. The fixed sentence profile uses a direct Spanish translation and English explanations, vocabulary, idioms, phrasal verbs, examples and British connected-speech tips. Opening the sentence explanation starts the request immediately. Reference speech can use an online synthetic British voice. Neither service resolves the local dictionary entries.
+The AI tutor supplies separate contextual explanations. The fixed sentence profile provides a plain-English paraphrase and contextual explanations, vocabulary, idioms, phrasal verbs, examples and British connected-speech tips. Opening the sentence explanation starts the request immediately. Reference speech can use an online synthetic British voice. Neither service resolves the local dictionary entries.
 
 Source code and bundled dictionaries belong in Git. Databases, uploaded videos, recordings, credentials and downloaded speech models stay private. See [backup instructions](PUBLISHING.md).

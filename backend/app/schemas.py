@@ -248,7 +248,7 @@ class TutorExplanationDTO(TutorExplanationContent):
 
 class TutorExplainRequestDTO(BaseModel):
     segment_id: int
-    language: str = Field(default="es", max_length=10)
+    language: str = Field(default="en", max_length=10)
 
 class DictionarySenseDTO(BaseModel):
     part_of_speech: str
@@ -286,7 +286,7 @@ class VocabularyExplainRequestDTO(BaseModel):
     term: str = Field(min_length=1, max_length=200)
     selection_start: Optional[int] = None
     selection_end: Optional[int] = None
-    explanation_language: str = Field(default="es", max_length=10)
+    explanation_language: str = Field(default="en", max_length=10)
 
 class VocabularyExplainResponseDTO(BaseModel):
     term: str

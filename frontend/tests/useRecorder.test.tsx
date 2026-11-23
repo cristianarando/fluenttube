@@ -27,5 +27,5 @@ it('explains when the selected microphone is no longer connected',async()=>{
   vi.stubGlobal('navigator',{mediaDevices:{getUserMedia:vi.fn().mockRejectedValue(Object.assign(new Error(),{name:'OverconstrainedError'})),enumerateDevices:vi.fn().mockResolvedValue([])}});
   const {result}=renderHook(()=>useRecorder());
   await act(async()=>{await result.current.startRecording();});
-  expect(result.current.errorMessage).toMatch(/seleccionado ya no está disponible/);
+  expect(result.current.errorMessage).toMatch(/selected microphone is no longer available/);
 });

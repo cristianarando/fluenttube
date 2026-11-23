@@ -111,7 +111,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBackToLibrary }) =
               </div>
             </div>
 
-            <p className="text-xs text-text-secondary">Sentence explanations use a Spanish translation, English learning notes and British pronunciation tips.</p>
+            <p className="text-xs text-text-secondary">Sentence explanations provide a plain-English paraphrase, contextual grammar notes and British pronunciation tips.</p>
 
             {/* Auto-Loop Toggle */}
             <div className="space-y-2">

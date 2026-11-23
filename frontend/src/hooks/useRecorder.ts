@@ -83,7 +83,7 @@ export function useRecorder(options: UseRecorderOptions = {}): UseRecorderReturn
   const refreshDevices = useCallback(async () => {
     if (!navigator.mediaDevices?.enumerateDevices) return;
     try { const list = await navigator.mediaDevices.enumerateDevices(); if (Array.isArray(list)) setDevices(list.filter(d => d.kind === 'audioinput')); }
-    catch { setErrorMessage('No se pudo listar los micrófonos. Revisa los permisos del navegador.'); }
+    catch { setErrorMessage('Could not list microphones. Check your browser permissions.'); }
   }, []);
   const setDeviceId = (id:string) => { setDevice(id); try { localStorage.setItem('fluenttube.microphone',id); } catch {} };
   useEffect(() => {
@@ -272,7 +272,7 @@ export function useRecorder(options: UseRecorderOptions = {}): UseRecorderReturn
         return;
       }
       streamRef.current = stream;
-      setActiveMicrophone(stream.getAudioTracks()[0]?.label || 'Micrófono predeterminado');
+      setActiveMicrophone(stream.getAudioTracks()[0]?.label || 'System default microphone');
       void refreshDevices();
       try {
         const context = new AudioContext();
@@ -303,7 +303,7 @@ export function useRecorder(options: UseRecorderOptions = {}): UseRecorderReturn
           'Microphone permission was denied. Please allow microphone access in your browser site settings and try again.'
         );
       } else if (error.name === 'OverconstrainedError') {
-        setErrorMessage('El micrófono seleccionado ya no está disponible. Elige otro o Predeterminado.');
+        setErrorMessage('The selected microphone is no longer available. Choose another input or Default.');
       } else if (
         error.name === 'NotFoundError' ||
         error.name === 'DevicesNotFoundError'

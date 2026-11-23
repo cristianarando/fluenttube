@@ -66,6 +66,6 @@ async def explain_vocabulary_term(
         segment=segment,
         term=clean_term,
         session=session,
-        language=req.explanation_language or "es",
+        language=req.explanation_language or "en",
     )
     return explanation

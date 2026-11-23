@@ -144,7 +144,7 @@ class MockTutorClient(BaseTutorClient):
 
 
 VALID_TUTOR_JSON = json.dumps({
-    "spanish_translation": "Estoy intentando entender cómo funciona esto.",
+    "spanish_translation": "I am trying to make sense of how this works.",
     "contextual_meaning": "The speaker expresses that they have been trying to understand it for a while.",
     "key_vocabulary": [
         {"term": "figure out", "type": "phrasal_verb", "explanation": "To understand or solve something.", "example": "I finally figured out the answer."}
@@ -347,7 +347,7 @@ def test_tutor_fixed_profile_ignores_old_language_preferences(client: TestClient
     _, segments = seed_test_video(db_session, completed=True)
     target = segments[1]
 
-    # 1. Spanish call
+    # 1. First call with legacy language code
     resp_es = client.post("/api/tutor/explain", json={"segment_id": target.id, "language": "es"})
     assert resp_es.status_code == 200
     assert resp_es.json()["cached"] is False

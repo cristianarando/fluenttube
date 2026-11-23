@@ -64,9 +64,9 @@ async def compare_voice(lesson_id: str, audio_file: UploadFile = File(...)):
     except AppException:
         raise
     except ValueError as exc:
-        raise AppException(code="AUDIO_UNSCORABLE", message="Graba entre 0,5 y 30 segundos y vuelve a intentarlo.", status_code=422) from exc
+        raise AppException(code="AUDIO_UNSCORABLE", message="Record between 0.5 and 30 seconds and try again.", status_code=422) from exc
     except Exception as exc:
-        raise AppException(code="VOICE_ANALYSIS_UNAVAILABLE", message="No se pudo comparar el audio. Puedes escuchar tu toma y reintentar.", status_code=503, retryable=True) from exc
+        raise AppException(code="VOICE_ANALYSIS_UNAVAILABLE", message="Could not compare the audio. You can listen to your take and try again.", status_code=503, retryable=True) from exc
     finally:
         safe_cleanup(raw, recording, reference)
         await audio_file.close()
@@ -111,13 +111,13 @@ def new_challenge(lesson_id: str, session: Session = Depends(get_session)):
     # their documented notation instead of grading an ambiguous recording.
     if lesson["diagram"]["kind"] == "notation" or lesson_id in {"near", "square", "cure"}:
         prompts = {
-            "primary": "¿Qué signo precede a la sílaba con acento principal?",
-            "secondary": "¿Qué signo precede a una sílaba con acento secundario?",
-            "length": "¿Qué signo se coloca después de una vocal para indicar longitud?",
-            "near": "¿Qué transcripción tradicional va de una vocal anterior casi cerrada hacia el centro?",
-            "square": "¿Qué diptongo tradicional parte de una vocal anterior media y termina cerca del centro?",
-            "cure": "¿Qué diptongo tradicional empieza con los labios redondeados y termina cerca del centro?",
-            "thought": "¿Qué símbolo representa la vocal larga redondeada de thought?",
+            "primary": "Which symbol precedes the syllable carrying primary stress?",
+            "secondary": "Which symbol precedes a syllable carrying secondary stress?",
+            "length": "Which symbol is placed after a vowel to indicate length?",
+            "near": "Which traditional diphthong glides from a near-close front vowel towards the centre?",
+            "square": "Which traditional diphthong starts from a mid front vowel and glides towards the centre?",
+            "cure": "Which traditional diphthong starts with rounded lips and glides towards the centre?",
+            "thought": "Which symbol represents the long rounded vowel in thought?",
         }
         response["prompt"] = prompts[challenge.target_id]
     return response

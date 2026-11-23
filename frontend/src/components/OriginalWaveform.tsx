@@ -30,12 +30,12 @@ export function OriginalWaveform({segmentId,features,paused,disabled,onPlay,onFa
   },[segmentId]); // Audio identity is the sentence, never the student's take.
   useEffect(()=>{if(paused)player.current?.pause?.();},[paused]);
   return <section aria-label="Original audio diagram" className="p-3 rounded bg-background/80 border border-border/70 space-y-2">
-    <div className="flex items-center justify-between"><span className="text-xs font-semibold">Original · audio del vídeo</span>
+    <div className="flex items-center justify-between"><span className="text-xs font-semibold">Original · video audio</span>
       <button className="p-1 rounded border border-border text-accent" aria-label={playing?'Pause original waveform':'Play original waveform'} disabled={disabled||(!ready&&!error)} onClick={()=>{if(error){onFallback?.();return;}void Promise.resolve(player.current?.playPause()).catch(()=>setError(true));}}>
         {playing?<Pause size={16}/>:<Play size={16}/>}</button></div>
     <div ref={container} className="min-h-[32px]"/>
-    {!ready&&!error&&<p className="text-xs text-text-muted">Preparando el audio original…</p>}
-    {error&&<p role="status" className="text-xs">No se pudo dibujar el original. Puedes escucharlo desde el vídeo.</p>}
+    {!ready&&!error&&<p className="text-xs text-text-muted">Preparing original audio…</p>}
+    {error&&<p role="status" className="text-xs">Could not render original waveform. You can play it from the video player.</p>}
     {features&&<Contour features={features} label="Original"/>}
   </section>;
 }
